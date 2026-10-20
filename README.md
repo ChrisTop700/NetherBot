@@ -19,9 +19,12 @@ Netherbot is an addon for NPCBots for TrinityCore and AzerothCore 3.3.5, allowin
 3. Start the game and make sure the addon is enabled in the Addons menu.
 
 ## Usage
-1. Open the Netherbot window by typing `/netherbot show` in the chat window or hide by typing `/netherbot hide`.
-2. Use the buttons to quickly execute NPCBot commands by selecting a target or self for all of your bots or enter bot ID.
+1. Open or toggle the Netherbot window by typing /netherbot (or short alias /nb), or use /netherbot show / /netherbot hide.
+2. Close windows anytime using the standard **Escape** key or the **'X' close button** at the top right of each panel.
+3. Use the buttons to quickly execute NPCBot commands by selecting a target or self for all of your bots or enter bot ID.
 
 ## Slash Commands
-/netherbot show
-/netherbot hide
+- /netherbot or /nb — Toggle the interface on / off
+- /netherbot show (or /nb show) — Show the interface
+- /netherbot hide (or /nb hide) — Hide the interface
+- /netherbot toggle (or /nb toggle) — Toggle the interface

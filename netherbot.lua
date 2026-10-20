@@ -24,6 +24,19 @@ frame:SetBackdropBorderColor(0.53, 0.07, 0.89, 1)
 frame:SetMovable(true)
 frame:EnableMouse(true)
 
+-- Close button for Main frame
+local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 2, 2)
+closeButton:SetScript("OnClick", function()
+  frame:Hide()
+end)
+
+-- Auto-hide child frames when Main frame is hidden
+frame:SetScript("OnHide", function()
+  adminFrame:Hide()
+  lookupFrame:Hide()
+end)
+
 -- Create the adminFrame
 local adminFrame = CreateFrame("Frame", "NetherbotAdminFrame", UIParent)
 adminFrame:SetSize(200, 200)
@@ -41,6 +54,13 @@ adminFrame:Hide()
 local adminTitle = adminFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 adminTitle:SetPoint("TOP", adminFrame, "TOP", 0, -10)
 adminTitle:SetText(i18n("Admin"))
+
+-- Close button for adminFrame
+local adminCloseButton = CreateFrame("Button", nil, adminFrame, "UIPanelCloseButton")
+adminCloseButton:SetPoint("TOPRIGHT", adminFrame, "TOPRIGHT", 2, 2)
+adminCloseButton:SetScript("OnClick", function()
+  adminFrame:Hide()
+end)
 
 
 
@@ -638,6 +658,13 @@ local lookupTitle = lookupFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal
 lookupTitle:SetPoint("TOPLEFT", lookupFrame, "TOPLEFT", 10, -10)
 lookupTitle:SetText(i18n("Select class:"))
 
+-- Close button for lookupFrame
+local lookupCloseButton = CreateFrame("Button", nil, lookupFrame, "UIPanelCloseButton")
+lookupCloseButton:SetPoint("TOPRIGHT", lookupFrame, "TOPRIGHT", 2, 2)
+lookupCloseButton:SetScript("OnClick", function()
+  lookupFrame:Hide()
+end)
+
 
 -- Create the scrollframe for the list
 local lookupScrollFrame = CreateFrame("ScrollFrame", "NetherbotLookupScrollFrame", lookupFrame, "UIPanelScrollFrameTemplate")
@@ -769,15 +796,32 @@ lookupFrame:EnableMouse(true)
   end
 end)
 
--- Slash command to show-hide netherbot.
+-- Allow closing with Escape key
+tinsert(UISpecialFrames, "NetherbotFrame")
+tinsert(UISpecialFrames, "NetherbotAdminFrame")
+tinsert(UISpecialFrames, "NetherbotLookupFrame")
+
+-- Slash command to show/hide/toggle netherbot.
 SLASH_NETHERBOT1 = "/netherbot"
+SLASH_NETHERBOT2 = "/nb"
 function SlashCmdList.NETHERBOT(msg, editbox)
+  msg = (msg or ""):match("^%s*(.-)%s*$"):lower()
   if msg == "show" then
     frame:Show()
   elseif msg == "hide" then
     frame:Hide()
     adminFrame:Hide()
     lookupFrame:Hide()
+  elseif msg == "toggle" or msg == "" then
+    if frame:IsShown() then
+      frame:Hide()
+      adminFrame:Hide()
+      lookupFrame:Hide()
+    else
+      frame:Show()
+    end
+  else
+    print("|cff8855ffNetherBot|r: use |cffffff00/netherbot|r or |cffffff00/nb|r [show | hide | toggle]")
   end
 end
 
